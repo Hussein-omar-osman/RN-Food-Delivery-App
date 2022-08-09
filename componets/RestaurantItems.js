@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -41,13 +41,14 @@ export const localRestaurants = [
   },
 ];
 
-export default function RestaurantItems() {
+export default function RestaurantItems(props) {
   return (
     <>
-      {localRestaurants.map((item, index) => (
+      {props.restaurantData.map((item, index) => (
         <TouchableOpacity
-          style={{ marginBottom: 30 }}
+          style={{ marginBottom: 20 }}
           key={index}
+          activeOpacity={0.95}
           onPress={() => console.log('clicked')}
         >
           <View
@@ -62,19 +63,29 @@ export default function RestaurantItems() {
   );
 }
 
-const RestaurantImage = (props) => (
-  <>
-    <Image
-      source={{
-        uri: props.image,
-      }}
-      style={{ width: '100%', height: 180 }}
-    />
-    <TouchableOpacity style={{ position: 'absolute', right: 20, top: 20 }}>
-      <MaterialCommunityIcons name='heart-outline' size={25} color='#fff' />
-    </TouchableOpacity>
-  </>
-);
+const RestaurantImage = (props) => {
+  const [liked, setLiked] = useState(false);
+  return (
+    <>
+      <Image
+        source={{
+          uri: props.image,
+        }}
+        style={{ width: '100%', height: 180 }}
+      />
+      <TouchableOpacity
+        style={{ position: 'absolute', right: 20, top: 20 }}
+        onPress={() => setLiked((prev) => !prev)}
+      >
+        {liked ? (
+          <MaterialCommunityIcons name='heart' size={25} color='#FF6464' />
+        ) : (
+          <MaterialCommunityIcons name='heart-outline' size={25} color='#fff' />
+        )}
+      </TouchableOpacity>
+    </>
+  );
+};
 
 const RestaurantInfo = (props) => (
   <View
