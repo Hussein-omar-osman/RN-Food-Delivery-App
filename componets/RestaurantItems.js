@@ -22,6 +22,15 @@ export const localRestaurants = [
     rating: 3.7,
   },
   {
+    name: 'Beachside Bar',
+    image_url:
+      'https://static.onecms.io/wp-content/uploads/sites/9/2020/04/24/ppp-why-wont-anyone-rescue-restaurants-FT-BLOG0420.jpg',
+    categories: ['Cafe', 'Bar'],
+    price: '$$',
+    reviews: 1244,
+    rating: 4.5,
+  },
+  {
     name: "India's Grill",
     image_url:
       'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cmVzdGF1cmFudCUyMGludGVyaW9yfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
@@ -35,15 +44,20 @@ export const localRestaurants = [
 export default function RestaurantItems() {
   return (
     <>
-      <TouchableOpacity
-        style={{ marginBottom: 30 }}
-        onPress={() => console.log('clicked')}
-      >
-        <View style={{ marginTop: 10, padding: 15, backgroundColor: 'white' }}>
-          <RestaurantImage />
-          <RestaurantInfo name={'Kilimanjaro Food'} rating={5} />
-        </View>
-      </TouchableOpacity>
+      {localRestaurants.map((item, index) => (
+        <TouchableOpacity
+          style={{ marginBottom: 30 }}
+          key={index}
+          onPress={() => console.log('clicked')}
+        >
+          <View
+            style={{ marginTop: 10, padding: 15, backgroundColor: 'white' }}
+          >
+            <RestaurantImage image={item.image_url} />
+            <RestaurantInfo name={item.name} rating={item.rating} />
+          </View>
+        </TouchableOpacity>
+      ))}
     </>
   );
 }
@@ -52,7 +66,7 @@ const RestaurantImage = (props) => (
   <>
     <Image
       source={{
-        uri: 'https://static.onecms.io/wp-content/uploads/sites/9/2020/04/24/ppp-why-wont-anyone-rescue-restaurants-FT-BLOG0420.jpg',
+        uri: props.image,
       }}
       style={{ width: '100%', height: 180 }}
     />
