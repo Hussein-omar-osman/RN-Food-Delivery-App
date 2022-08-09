@@ -1,24 +1,46 @@
-import React from 'react';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 export default function HeaderTabs() {
+  const [activeTab, setActiveTab] = useState('Delivery');
   return (
-    <View>
-      <Text> HeaderTabs Componets </Text>
-      <HearderButton msg={'Delivery'} />
-      <HearderButton msg={'PickUp'} />
+    <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+      <HeaderButton
+        text='Delivery'
+        btnColor='black'
+        textColor='white'
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+      <HeaderButton
+        text='Pickup'
+        btnColor='white'
+        textColor='black'
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
     </View>
   );
 }
 
-const HearderButton = ({ msg }) => {
-  return (
-    <View>
-      <TouchableOpacity onPress={() => console.warn(msg)}>
-        <Text>{msg}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({});
+const HeaderButton = (props) => (
+  <TouchableOpacity
+    style={{
+      backgroundColor: props.activeTab === props.text ? 'black' : 'white',
+      paddingVertical: 6,
+      paddingHorizontal: 16,
+      borderRadius: 30,
+    }}
+    onPress={() => props.setActiveTab(props.text)}
+  >
+    <Text
+      style={{
+        color: props.activeTab === props.text ? 'white' : 'black',
+        fontSize: 15,
+        fontWeight: '900',
+      }}
+    >
+      {props.text}
+    </Text>
+  </TouchableOpacity>
+);
